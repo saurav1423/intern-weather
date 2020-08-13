@@ -1,0 +1,43 @@
+.container {
+	text-align: center;
+}
+
+.textField {
+	height: 23px !important;
+	width: 35% !important;
+	margin: 10px 4px 4px 1px !important;
+}
+
+.button1 {
+	margin: 22px 4px 4px 1px !important;
+	background-color: #42a5f5 !important;
+}
+.button2 {
+	margin: 22px 4px 4px 1px !important;
+	background-color: #b2ebf2 !important;
+}
+
+@media (max-width: 535px) {
+	.textField {
+		width: 100% !important;
+		margin: 3px auto !important;
+	}
+	.button1 {
+		margin: 32px 12px auto auto !important;
+	}
+	.button2 {
+		margin: 32px auto auto auto !important;
+	}
+}
+@media (max-width: 333px) {
+	.textField {
+		width: 100% !important;
+		margin: 3px auto !important;
+	}
+	.button1 {
+		margin: 32px auto auto auto !important;
+	}
+	.button2 {
+		margin: 12px auto auto auto !important;
+	}
+}
