@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const fetchCurrentAndComingDateData = async (country) => {
-	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${country}&appid=0fe4b62e55a918e3336944107d452963`;
+export const fetchCurrentData = async (city) => {
+	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
 
 	try {
 		const { data } = await axios.get(url);
@@ -13,7 +13,33 @@ export const fetchCurrentAndComingDateData = async (country) => {
 			date: data.list[0].dt_txt,
 		};
 		return currentData;
-		console.log(data);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const fetchComingData = async (city) => {
+	const comingFiveDayData = [];
+	console.log(city);
+
+	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
+
+	try {
+		const {
+			data: { list },
+		} = await axios.get(url);
+
+		for (let i = 0; i < list.length; i += 8) {
+			const singleData = {
+				temp: (list[i].main.temp - 273.15).toFixed(2),
+				humidity: list[i].main.humidity,
+				clouds: list[i].clouds.all,
+				date: list[i].dt_txt,
+			};
+			comingFiveDayData.push(singleData);
+		}
+		console.log(comingFiveDayData);
+		return comingFiveDayData;
 	} catch (err) {
 		console.log(err);
 	}
@@ -43,7 +69,7 @@ export const fetchPastData = async (city) => {
 			const dataWeather = await axios.get(url);
 			const refractoredData = {
 				timeStamp: dataWeather.data.current.dt,
-				temp: dataWeather.data.current.temp - 273.15,
+				temp: (dataWeather.data.current.temp - 273.15).toFixed(2),
 				humidity: dataWeather.data.current.humidity,
 				clouds: dataWeather.data.current.clouds,
 			};

@@ -17,37 +17,41 @@ const Chart = (props) => {
 	}, []);
 
 	const lineChart = pastData.length ? (
-		<Line
-			data={{
-				labels: pastData.map((d) => d.timeStamp),
-				datasets: [
-					{
-						data: pastData.map((d) => d.temp),
-						label: 'Temperature °C',
-						borderColor: '#aeea00',
-						fill: true,
-					},
-					{
-						data: pastData.map((d) => d.humidity),
-						label: 'Humidity %',
-						borderColor: '#ff9800',
-						fill: true,
-					},
-					{
-						data: pastData.map((d) => d.clouds),
-						label: 'Clouds %',
-						borderColor: '#f4511e',
-						backgroundColor: '#ffab91',
-						fill: true,
-					},
-				],
-			}}
-		/>
+		<div className={styles.graph}>
+			<Line
+				data={{
+					labels: pastData.map((d) => d.timeStamp),
+					datasets: [
+						{
+							data: pastData.map((d) => d.temp),
+							label: 'Temperature °C',
+							borderColor: '#aeea00',
+							fill: true,
+						},
+						{
+							data: pastData.map((d) => d.humidity),
+							label: 'Humidity %',
+							borderColor: '#ff9800',
+							fill: true,
+						},
+						{
+							data: pastData.map((d) => d.clouds),
+							label: 'Clouds %',
+							borderColor: '#f4511e',
+							backgroundColor: '#ffab91',
+							fill: true,
+						},
+					],
+				}}
+			/>
+		</div>
 	) : (
-		<Spinner />
+		<div>
+			<Spinner />
+		</div>
 	);
 
-	return <div className={styles.container}>{lineChart}</div>;
+	return <div>{lineChart}</div>;
 };
 
 export default Chart;
