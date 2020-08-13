@@ -3,22 +3,27 @@ import styles from './Form.module.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Cards from '../Cards/Cards';
+import Chart from '../Chart/Chart';
 
 import { fetchCurrentAndComingDateData } from '../../Api/Api';
 
 const Form = () => {
 	const [inputValue, setInputValue] = useState('');
+	const [sendInputData, setSendInputData] = useState('');
+	const [loadChart, setLoadChart] = useState(false);
 	const [data, setData] = useState({});
 
 	const handleChange = (e) => {
 		const value = e.target.value;
 		setInputValue(value);
+		setSendInputData(value);
+		setLoadChart(false);
 	};
 
 	const handleClick1 = async () => {
 		const x = await fetchCurrentAndComingDateData(inputValue);
-		console.log(x);
 		setData(x);
+		setLoadChart(true);
 	};
 
 	return (
@@ -43,6 +48,7 @@ const Form = () => {
 				</Button>
 			</div>
 			{data.city ? <Cards data={data} /> : null}
+			{loadChart ? <Chart data={sendInputData} /> : null}
 		</>
 	);
 };

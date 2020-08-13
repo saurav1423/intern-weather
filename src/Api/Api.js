@@ -19,29 +19,38 @@ export const fetchCurrentAndComingDateData = async (country) => {
 	}
 };
 
-// export const fetchDailyData = async () => {
-//    try {
-//       const { data } = await axios.get(`${url}/daily`);
+export const fetchPastData = async (city) => {
+	const prevFiveDaysData = [];
 
-//       const modifiedData = data.map((d) => ({
-//          confirmed: d.confirmed.total,
-//          deaths: d.deaths.total,
-//          date: d.reportDate,
-//       }));
+	const cityToLatiLongi = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+		city
+	)}.json?access_token=pk.eyJ1Ijoic2VycnlzYXVyYXYiLCJhIjoiY2tjMjFsZGUzMWd0ZjJ0bjRvbXIzZ2N5dCJ9.yZJRRdiAXZGtZOLYwASp7Q&limit=1`;
 
-//       return modifiedData;
-//    } catch (err) {
-//       console.log(err);
-//    }
-// };
+	try {
+		const { data } = await axios.get(cityToLatiLongi);
+		const lati = data.features[0].center[1];
+		const longi = data.features[0].center[0];
 
-// export const country = async () => {
-//    try {
-//       const {
-//          data: { countries },
-//       } = await axios.get(`${url}/countries`);
-//       return countries.map((country) => country.name);
-//    } catch (err) {
-//       console.log(err);
-//    }
-// };
+		for (let i = 0; i < 5; i++) {
+			const x = new Date(`Aug ${13 - i},2020`);
+
+			const date = new Date(x);
+
+			const timestamp = date.getTime() / 1000;
+
+			const url = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lati}&lon=${longi}&dt=${timestamp}&appid=0fe4b62e55a918e3336944107d452963`;
+
+			const dataWeather = await axios.get(url);
+			const refractoredData = {
+				timeStamp: dataWeather.data.current.dt,
+				temp: dataWeather.data.current.temp - 273.15,
+				humidity: dataWeather.data.current.humidity,
+				clouds: dataWeather.data.current.clouds,
+			};
+			prevFiveDaysData.push(refractoredData);
+		}
+		return prevFiveDaysData;
+	} catch (err) {
+		console.log(err);
+	}
+};

@@ -1,0 +1,13 @@
+.container {
+	align-items: center !important;
+	background-color: #dce775 !important;
+	margin-left: 150px;
+	width: 80%;
+}
+
+@media (max-width: 942px) {
+	.container {
+		width: 100%;
+		margin-left: auto;
+	}
+}
