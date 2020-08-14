@@ -2,19 +2,26 @@ import axios from 'axios';
 
 export const fetchCurrentData = async (city) => {
 	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
+	var currentData = {};
 
 	try {
 		const { data } = await axios.get(url);
-		const currentData = {
-			temp: data.list[0].main.temp,
-			humidity: data.list[0].main.humidity,
-			clouds: data.list[0].clouds.all,
-			city: data.city.name,
-			date: data.list[0].dt_txt,
-		};
-		return currentData;
+		console.log();
+		if (data.code == 404) {
+			return data.message;
+		} else {
+			currentData = {
+				temp: data.list[0].main.temp,
+				humidity: data.list[0].main.humidity,
+				clouds: data.list[0].clouds.all,
+				city: data.city.name,
+				date: data.list[0].dt_txt,
+			};
+			return currentData;
+		}
 	} catch (err) {
-		console.log(err);
+		currentData = null;
+		return currentData;
 	}
 };
 

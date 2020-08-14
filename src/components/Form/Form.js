@@ -24,9 +24,11 @@ const Form = () => {
 
 	const handleClick1 = async () => {
 		const x = await fetchCurrentData(inputValue);
+
 		setData(x);
 		setLoadChart(true);
 	};
+
 	const handleClick2 = () => {
 		const getLatiLongi = () => {
 			navigator.geolocation.getCurrentPosition(
@@ -46,6 +48,13 @@ const Form = () => {
 		};
 		getLatiLongi();
 	};
+
+	function isEmpty(obj) {
+		for (var key in obj) {
+			if (obj.hasOwnProperty(key)) return false;
+		}
+		return true;
+	}
 
 	return (
 		<>
@@ -73,9 +82,15 @@ const Form = () => {
 					Use my Location
 				</Button>
 			</div>
-			{data.city ? <Cards data={data} /> : null}
-			{loadChart ? <Table data={sendInputData} /> : null}
-			{loadChart ? <Chart data={sendInputData} /> : null}
+			{!isEmpty(data) ? (
+				<>
+					{data.city ? <Cards data={data} /> : null}
+					{loadChart ? <Table data={sendInputData} /> : null}
+					{loadChart ? <Chart data={sendInputData} /> : null}
+				</>
+			) : (
+				<p className={styles.error}>Please type City Name/Correct City Name</p>
+			)}
 		</>
 	);
 };
