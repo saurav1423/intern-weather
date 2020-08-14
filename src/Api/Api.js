@@ -20,7 +20,6 @@ export const fetchCurrentData = async (city) => {
 
 export const fetchComingData = async (city) => {
 	const comingFiveDayData = [];
-	console.log(city);
 
 	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
 
@@ -34,11 +33,10 @@ export const fetchComingData = async (city) => {
 				temp: (list[i].main.temp - 273.15).toFixed(2),
 				humidity: list[i].main.humidity,
 				clouds: list[i].clouds.all,
-				date: list[i].dt_txt,
+				date: list[i].dt_txt.split(' ')[0].split('-').reverse().join('-'),
 			};
 			comingFiveDayData.push(singleData);
 		}
-		console.log(comingFiveDayData);
 		return comingFiveDayData;
 	} catch (err) {
 		console.log(err);
@@ -57,8 +55,27 @@ export const fetchPastData = async (city) => {
 		const lati = data.features[0].center[1];
 		const longi = data.features[0].center[0];
 
-		for (let i = 0; i < 5; i++) {
-			const x = new Date(`Aug ${13 - i},2020`);
+		for (let i = 4; i >= 0; i--) {
+			const m = new Date();
+			const cdate = m.getDate().toString();
+			const cmonths = [
+				'Jan',
+				'Feb',
+				'Mar',
+				'Apr',
+				'May',
+				'Jun',
+				'Jul',
+				'Aug',
+				'Sep',
+				'Oct',
+				'Nov',
+				'Dec',
+			];
+			const cmonthName = cmonths[m.getMonth()];
+			const cyear = m.getFullYear().toString();
+
+			const x = new Date(cmonthName + ' ' + (cdate - i) + ',' + cyear);
 
 			const date = new Date(x);
 
@@ -67,8 +84,12 @@ export const fetchPastData = async (city) => {
 			const url = `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lati}&lon=${longi}&dt=${timestamp}&appid=0fe4b62e55a918e3336944107d452963`;
 
 			const dataWeather = await axios.get(url);
+
 			const refractoredData = {
-				timeStamp: dataWeather.data.current.dt,
+				timeStampDate: new Date(dataWeather.data.current.dt * 1000).getDate(),
+				timeStampMonth: new Date(dataWeather.data.current.dt * 1000)
+					.toDateString()
+					.substring(4, 7),
 				temp: (dataWeather.data.current.temp - 273.15).toFixed(2),
 				humidity: dataWeather.data.current.humidity,
 				clouds: dataWeather.data.current.clouds,

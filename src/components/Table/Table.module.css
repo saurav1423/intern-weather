@@ -1,8 +1,16 @@
 .container {
 	align-items: center !important;
-	background-color: #dce775 !important;
 	margin-left: 150px;
+	margin-bottom: 50px;
 	width: 80%;
+}
+
+.cell {
+	color: #ff4081 !important;
+	background-color: wheat !important;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 20px !important;
 }
 
 @media (max-width: 942px) {

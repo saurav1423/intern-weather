@@ -20,7 +20,7 @@ const Chart = (props) => {
 		<div className={styles.graph}>
 			<Line
 				data={{
-					labels: pastData.map((d) => d.timeStamp),
+					labels: pastData.map((d) => d.timeStampDate + ' ' + d.timeStampMonth),
 					datasets: [
 						{
 							data: pastData.map((d) => d.temp),

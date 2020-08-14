@@ -26,21 +26,29 @@ const TableComp = (props) => {
 			<Table aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell>Coming Dates</TableCell>
-						<TableCell align="right">Temperature(°C)</TableCell>
-						<TableCell align="right">Humidity(%)</TableCell>
-						<TableCell align="right">Clouds(%)</TableCell>
+						<TableCell className={styles.cell} align="center">
+							Coming Dates
+						</TableCell>
+						<TableCell className={styles.cell} align="center">
+							Temperature(°C)
+						</TableCell>
+						<TableCell className={styles.cell} align="center">
+							Humidity(%)
+						</TableCell>
+						<TableCell className={styles.cell} align="center">
+							Clouds(%)
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{comingData.map((data) => (
 						<TableRow key={data.date}>
-							<TableCell component="th" scope="row">
+							<TableCell component="th" align="center" scope="row">
 								{data.date}
 							</TableCell>
-							<TableCell align="right">{data.temp}</TableCell>
-							<TableCell align="right">{data.humidity}</TableCell>
-							<TableCell align="right">{data.clouds}</TableCell>
+							<TableCell align="center">{data.temp}</TableCell>
+							<TableCell align="center">{data.humidity}</TableCell>
+							<TableCell align="center">{data.clouds}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

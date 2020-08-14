@@ -1,12 +1,12 @@
 .graph {
 	align-items: center !important;
-	background-color: #dce775 !important;
+	background-color: #a7ffeb !important;
 	margin-left: 150px;
 	width: 80%;
 }
 
 @media (max-width: 942px) {
-	.container {
+	.graph {
 		width: 100%;
 		margin-left: auto;
 	}
