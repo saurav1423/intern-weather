@@ -105,6 +105,7 @@ export const fetchPastData = async (city) => {
 		}
 		return prevFiveDaysData;
 	} catch (err) {
+		console.log('somethong wrong');
 		console.log(err);
 	}
 };

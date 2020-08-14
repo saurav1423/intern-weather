@@ -15,6 +15,20 @@ const Form = () => {
 	const [loadChart, setLoadChart] = useState(false);
 	const [data, setData] = useState({});
 
+	useEffect(() => {
+		if (localStorage.getItem('city')) {
+			const expose = async () => {
+				const city = localStorage.getItem('city');
+				const x = await fetchCurrentData(city);
+				setData(x);
+				setLoadChart(true);
+				setInputValue(city);
+				setSendInputData(city);
+			};
+			expose();
+		}
+	}, []);
+
 	const handleChange = (e) => {
 		const value = e.target.value;
 		setInputValue(value);
@@ -24,7 +38,7 @@ const Form = () => {
 
 	const handleClick1 = async () => {
 		const x = await fetchCurrentData(inputValue);
-
+		localStorage.setItem('city', inputValue);
 		setData(x);
 		setLoadChart(true);
 	};
@@ -82,7 +96,7 @@ const Form = () => {
 					Use my Location
 				</Button>
 			</div>
-			{!isEmpty(data) ? (
+			{!isEmpty(data) && sendInputData ? (
 				<>
 					{data.city ? <Cards data={data} /> : null}
 					{loadChart ? <Table data={sendInputData} /> : null}

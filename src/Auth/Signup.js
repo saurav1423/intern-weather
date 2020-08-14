@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import styles from './signup.module.css';
@@ -15,18 +17,23 @@ const SignUp = () => {
 	const [email, setEmail] = useState('');
 
 	const handleSignup = async () => {
-		const authData = {
-			email: email,
-			password: password,
-			returnSecureToken: true,
-		};
+		try {
+			const authData = {
+				email: email,
+				password: password,
+				returnSecureToken: true,
+			};
 
-		const getData = await axios.post(
-			'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDIuIVE1lnTZrZRYCMv-3OJzEA2bXKweIk',
-			authData
-		);
-		console.log(getData);
-		history.push('/signin');
+			await axios.post(
+				'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDIuIVE1lnTZrZRYCMv-3OJzEA2bXKweIk',
+				authData
+			);
+			history.push('/signin');
+		} catch (err) {
+			return (
+				<Alert severity="error">This is an error alert — check it out!</Alert>
+			);
+		}
 	};
 
 	return (
