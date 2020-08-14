@@ -36,7 +36,7 @@ const SignUp = () => {
 			);
 			history.push('/signin');
 		} catch (error) {
-			console.log(error.message);
+			alert('You are already our Family!!');
 			setLoading(false);
 		}
 	};

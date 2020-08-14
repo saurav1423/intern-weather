@@ -31,6 +31,7 @@ const SignIn = () => {
 			localStorage.setItem('user', x.data.idToken);
 			history.push('/weather');
 		} catch (error) {
+			alert('Email or Password is incorrect');
 			console.log(error.message);
 			setLoading(false);
 		}
