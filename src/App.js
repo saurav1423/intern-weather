@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Form from './components/Form/Form';
 import SignIn from './Auth/Signin';
 import SignUp from './Auth/Signup';
-import { BrowserRouter, Route, useHistory, withRouter } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 
 function App() {
 	const history = useHistory();

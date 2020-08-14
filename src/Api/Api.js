@@ -7,7 +7,7 @@ export const fetchCurrentData = async (city) => {
 	try {
 		const { data } = await axios.get(url);
 		console.log();
-		if (data.code == 404) {
+		if (data.code === 404) {
 			return data.message;
 		} else {
 			currentData = {
