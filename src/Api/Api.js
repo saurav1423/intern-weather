@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const fetchCurrentData = async (city) => {
-	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
+	let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
 	var currentData = {};
 
 	try {
@@ -28,7 +28,7 @@ export const fetchCurrentData = async (city) => {
 export const fetchComingData = async (city) => {
 	const comingFiveDayData = [];
 
-	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
+	let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=0fe4b62e55a918e3336944107d452963`;
 
 	try {
 		const {

@@ -8,14 +8,22 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import styles from './signup.module.css';
+import Spinner from '../Spinner/Spinner';
 
 const SignUp = () => {
 	const history = useHistory();
 	const [password, setPasword] = useState('');
 	const [email, setEmail] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const handleSignup = async () => {
 		try {
+			if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+				alert('You have entered an invalid email address!');
+				history.push('/signup');
+			}
+
+			setLoading(true);
 			const authData = {
 				email: email,
 				password: password,
@@ -27,14 +35,13 @@ const SignUp = () => {
 				authData
 			);
 			history.push('/signin');
-		} catch (err) {
-			return (
-				<Alert severity="error">This is an error alert — check it out!</Alert>
-			);
+		} catch (error) {
+			console.log(error.message);
+			setLoading(false);
 		}
 	};
 
-	return (
+	let form = (
 		<Container component="main" maxWidth="xs" className={styles.container}>
 			<CssBaseline />
 			<div className={styles.paper}>
@@ -85,6 +92,12 @@ const SignUp = () => {
 			</div>
 		</Container>
 	);
+
+	if (loading) {
+		form = <Spinner />;
+	}
+
+	return <div>{form}</div>;
 };
 
 export default SignUp;

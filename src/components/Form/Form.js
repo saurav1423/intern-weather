@@ -47,7 +47,7 @@ const Form = () => {
 		const getLatiLongi = () => {
 			navigator.geolocation.getCurrentPosition(
 				async function (position) {
-					const url = `http://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1Ijoic2VycnlzYXVyYXYxMiIsImEiOiJja2RzMzF2bjYxanc0MndtcWh0dXozbm1zIn0.Z1xghK1OjOpx2bWaCzdOyg&limit=1`;
+					const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1Ijoic2VycnlzYXVyYXYxMiIsImEiOiJja2RzMzF2bjYxanc0MndtcWh0dXozbm1zIn0.Z1xghK1OjOpx2bWaCzdOyg&limit=1`;
 					const { data } = await axios.get(url);
 					const cityName = data.features[0].context[2].text;
 					const y = await fetchCurrentData(cityName);

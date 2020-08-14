@@ -7,14 +7,17 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import styles from './Signin.module.css';
+import Spinner from '../Spinner/Spinner';
 
 const SignIn = () => {
 	const history = useHistory();
 	const [password, setPasword] = useState('');
 	const [email, setEmail] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const handleSignIn = async () => {
 		try {
+			setLoading(true);
 			const authData = {
 				email: email,
 				password: password,
@@ -27,12 +30,13 @@ const SignIn = () => {
 			);
 			localStorage.setItem('user', x.data.idToken);
 			history.push('/weather');
-		} catch (err) {
-			console.log(err);
+		} catch (error) {
+			console.log(error.message);
+			setLoading(false);
 		}
 	};
 
-	return (
+	let form = (
 		<Container component="main" maxWidth="xs" className={styles.container}>
 			<CssBaseline />
 			<div className={styles.paper}>
@@ -82,6 +86,12 @@ const SignIn = () => {
 			</div>
 		</Container>
 	);
+
+	if (loading) {
+		form = <Spinner />;
+	}
+
+	return <div>{form}</div>;
 };
 
 export default SignIn;
